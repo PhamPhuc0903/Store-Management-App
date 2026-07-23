@@ -1,0 +1,51 @@
+name: Repository checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  repository-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reject committed environment files
+        shell: bash
+        run: |
+          set -euo pipefail
+          tracked_env_files="$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$' || true)"
+          if [ -n "$tracked_env_files" ]; then
+            echo "Environment files must not be committed:"
+            echo "$tracked_env_files"
+            exit 1
+          fi
+
+      - name: Check required project files
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            CONTRIBUTING.md
+            SECURITY.md
+            CHANGELOG.md
+            docs/project-governance.md
+            docs/engineering/definition-of-done.md
+          )
+          for file in "${required[@]}"; do
+            test -f "$file" || { echo "Missing $file"; exit 1; }
+          done
+
+      - name: Detect obvious secret patterns
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nE '(SUPABASE_SERVICE_ROLE_KEY|JWT_SECRET|OPENAI_API_KEY)=[^[:space:]]+' -- ':!*.example' ':!*.md'; then
+            echo "Possible secret committed."
+            exit 1
+          fi

@@ -1,0 +1,97 @@
+[
+  {
+    "name": "type:feature",
+    "color": "1D76DB",
+    "description": "New product or engineering capability"
+  },
+  {
+    "name": "type:bug",
+    "color": "D73A4A",
+    "description": "Defect or incorrect behavior"
+  },
+  {
+    "name": "type:architecture",
+    "color": "5319E7",
+    "description": "Architecture decision or change"
+  },
+  {
+    "name": "type:security",
+    "color": "B60205",
+    "description": "Security-related work"
+  },
+  {
+    "name": "type:documentation",
+    "color": "0075CA",
+    "description": "Documentation work"
+  },
+  {
+    "name": "type:infrastructure",
+    "color": "0E8A16",
+    "description": "CI/CD, Docker or deployment"
+  },
+  {
+    "name": "status:triage",
+    "color": "FBCA04",
+    "description": "Needs review and prioritization"
+  },
+  {
+    "name": "status:ready",
+    "color": "C2E0C6",
+    "description": "Ready for implementation"
+  },
+  {
+    "name": "status:blocked",
+    "color": "B60205",
+    "description": "Blocked by dependency or decision"
+  },
+  {
+    "name": "priority:p0",
+    "color": "B60205",
+    "description": "Critical priority"
+  },
+  {
+    "name": "priority:p1",
+    "color": "D93F0B",
+    "description": "High priority"
+  },
+  {
+    "name": "priority:p2",
+    "color": "FBCA04",
+    "description": "Normal priority"
+  },
+  {
+    "name": "priority:p3",
+    "color": "C5DEF5",
+    "description": "Low priority"
+  },
+  {
+    "name": "area:mobile",
+    "color": "00A4EF",
+    "description": "Flutter mobile"
+  },
+  {
+    "name": "area:web",
+    "color": "000000",
+    "description": "Next.js web admin"
+  },
+  {
+    "name": "area:api",
+    "color": "E0234E",
+    "description": "NestJS application backend"
+  },
+  {
+    "name": "area:database",
+    "color": "336791",
+    "description": "PostgreSQL and Supabase"
+  },
+  {
+    "name": "area:sync",
+    "color": "6F42C1",
+    "description": "Offline and delta synchronization"
+  },
+  {
+    "name": "area:ai",
+    "color": "10A37F",
+    "description": "AI-assisted capabilities"
+  }
+]

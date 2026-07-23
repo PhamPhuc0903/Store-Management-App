@@ -1,0 +1,52 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+.DS_Store
+
+# Node
+node_modules/
+.next/
+dist/
+coverage/
+.nx/
+.turbo/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+android/.gradle/
+ios/Pods/
+*.iml
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Docker
+docker-data/
+
+# Logs and local artifacts
+*.log
+tmp/
+artifacts/
+*.sqlite
+*.sqlite3
+*.db
+
+# Sensitive user data
+data/private/
+data/production/

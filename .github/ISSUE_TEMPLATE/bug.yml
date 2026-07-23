@@ -1,0 +1,60 @@
+name: Bug
+description: Báo cáo lỗi có thể tái hiện.
+title: "[Bug]: "
+labels: ["type:bug", "status:triage"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả lỗi
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Các bước tái hiện
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Kết quả mong đợi
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Kết quả thực tế
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App/API version
+  - type: input
+    id: device
+    attributes:
+      label: Thiết bị và hệ điều hành
+  - type: textarea
+    id: sync
+    attributes:
+      label: Trạng thái mạng và đồng bộ
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log đã loại bỏ dữ liệu nhạy cảm
