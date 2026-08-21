@@ -9,6 +9,8 @@ required=(
   .github/PULL_REQUEST_TEMPLATE.md
   .github/ISSUE_TEMPLATE/feature.yml
   .github/ISSUE_TEMPLATE/bug.yml
+  .github/ISSUE_TEMPLATE/security.yml
+  .github/workflows/ci.yml
   docs/project-governance.md
   docs/product/30-day-backlog.md
   docs/engineering/definition-of-done.md
