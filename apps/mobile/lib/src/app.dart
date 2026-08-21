@@ -13,7 +13,7 @@ class StoreManagementApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF176B5B)),
         scaffoldBackgroundColor: const Color(0xFFF3F5F7),
-        useMaterial3: true
+        useMaterial3: true,
       ),
     );
   }
