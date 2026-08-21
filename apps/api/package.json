@@ -1,0 +1,42 @@
+{
+  "name": "@store-management-app/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "format:check": "prettier --check \"src/**/*.ts\" \"*.ts\" \"*.json\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.28",
+    "@nestjs/config": "^4.0.0",
+    "@nestjs/core": "11.1.28",
+    "@nestjs/platform-express": "11.1.28",
+    "@nestjs/swagger": "11.4.6",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "nestjs-pino": "^4.4.1",
+    "pino": "^9.9.0",
+    "pino-http": "^10.5.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@nestjs/cli": "11.0.24",
+    "@nestjs/schematics": "11.1.0",
+    "@types/node": "^22.18.0",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "8.64.0",
+    "vitest": "^4.0.0",
+    "@types/express": "^5.0.0"
+  }
+}
