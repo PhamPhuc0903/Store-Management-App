@@ -34,3 +34,7 @@ ADR ghi lại các quyết định kiến trúc quan trọng và trade-off.
 - ADR-014 Docker for local backend and CI.
 - ADR-015 Managed production infrastructure initially.
 - ADR-016 AI with human-in-the-loop.
+
+## Accepted implementation ADRs
+
+- ADR-017 Dev Integration Branch and Multi-Artifact Release Identity — Accepted 2026-08-20.

@@ -5,8 +5,26 @@ Tất cả thay đổi đáng chú ý của StoreManagementApp được ghi tạ
 Định dạng dựa trên Keep a Changelog và semantic versioning.
 
 ## [Unreleased]
+### Sprint 2 CI and delivery foundation
+
+- Added protected `dev → main` release-flow documentation and ADR-017.
+- Consolidated required CI into one `CI / CI gate` workflow for API, Web, Mobile, and Supabase.
+- Added release-identity and forward-only database migration safety policy.
+- Aligned milestones with M0–M14 from Implementation Roadmap v1.0.
+- Added Dependabot and a security-hardening issue template.
+
+
 
 ### Added
+
+- npm workspaces monorepo.
+- NestJS API with versioned health endpoint, validation, logging and Swagger.
+- Next.js Web Admin foundation with API connectivity status.
+- Flutter source-first mobile foundation with Riverpod and go_router.
+- Supabase local configuration and foundation migration.
+- API/Web, Mobile and Database CI workflows.
+- Local bootstrap and prerequisite scripts.
+- Shared API contracts package.
 
 - Phase 0 repository governance scaffold.
 - Project documentation baseline.
