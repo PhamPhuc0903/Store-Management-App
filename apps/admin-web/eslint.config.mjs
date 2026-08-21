@@ -7,7 +7,15 @@ const config = [
   ...nextVitals,
   ...nextTs,
   {
-    ignores: ['.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+    ignores: ['node_modules',
+      'dist',
+      '.next',
+      '.nuxt',
+      'coverage',
+      'build',
+      '.turbo',
+      '.next',
+      'out'],
   },
 ];
 
