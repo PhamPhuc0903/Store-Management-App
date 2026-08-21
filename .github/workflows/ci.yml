@@ -1,0 +1,242 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+  push:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate-pr-source:
+    name: Validate PR source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce dev to main release flow
+        shell: bash
+        env:
+          EVENT_NAME: ${{github.event_name}}
+          BASE_REF: ${{github.base_ref}}
+          HEAD_REF: ${{github.head_ref}}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" != "pull_request" || "$BASE_REF" != "main" ]]; then
+            echo "Release-source validation is not required for this event."
+            exit 0
+          fi
+          if [[ "$HEAD_REF" == "dev" ]]; then
+            echo "Allowed release source branch: dev"
+            exit 0
+          fi
+          echo "::error::Pull requests into main must originate from dev."
+          exit 1
+
+  repository_policy:
+    name: Repository policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Reject tracked runtime environment files
+        shell: bash
+        run: |
+          set -euo pipefail
+          tracked_env_files="$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -v '\.env\.example$' || true)"
+          if [ -n "$tracked_env_files" ]; then
+            echo "::error::Runtime environment files must not be committed."
+            echo "$tracked_env_files"
+            exit 1
+          fi
+
+      - name: Reject local-only generated files
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden="$(git ls-files | grep -E '(^|/)\.idea/|(^|/)local\.properties$|(^|/)\.gradle/|tsconfig\.tsbuildinfo$' || true)"
+          if [[ -n "$forbidden" ]]; then
+            echo "::error::Local-only generated files must not be committed."
+            echo "$forbidden"
+            exit 1
+          fi
+
+      - name: Enforce one npm workspace lockfile
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            CONTRIBUTING.md
+            SECURITY.md
+            CHANGELOG.md
+            docs/project-governance.md
+            docs/engineering/branching-release-policy.md
+            docs/engineering/definition-of-done.md
+            docs/operations/github-setup-checklist.md
+            .github/workflows/ci.yml
+          )
+          for file in "${required[@]}"; do
+            [[ -f "$file" ]] || {echo "::error::Missing $file"; exit 1; }
+          done
+
+      - name: Detect obvious secret patterns
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nE '(SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|JWT_SECRET|OPENAI_API_KEY)=[^[:space:]]+' -- ':!*.example' ':!*.md'; then
+            echo "::error::Possible secret committed."
+            exit 1
+          fi
+
+  api-web:
+    name: API and Web
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate foundation structure
+        run: npm run validate:foundation
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+  mobile:
+    name: Mobile
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.0
+          channel: stable
+          cache: true
+
+      - name: Get dependencies
+        working-directory: apps/mobile
+        run: flutter pub get
+
+      - name: Check formatting
+        working-directory: apps/mobile
+        run: dart format --output=none --set-exit-if-changed lib test
+
+      - name: Analyze
+        working-directory: apps/mobile
+        run: flutter analyze
+
+      - name: Test
+        working-directory: apps/mobile
+        run: flutter test
+
+  database:
+    name: Database
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v3
+        with:
+          version: 2.115.0
+
+      - name: Start local Supabase
+        run: supabase start
+
+      - name: Rebuild database from migartions
+        run: supabase db reset
+
+      - name: Lint database
+        run: supabase db lint --level error
+
+      - name: Run database tests when present
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find supabase/tests -type f -name '*.sql' -print -quit | grep -q .; then
+            supabase test db
+          else
+            echo "No pgTAP SQL tests yet; tenant-isolation tests are added with M1 tenancy tables."
+          fi
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop
+
+  ci-gate:
+    name: CI gate
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - validate-pr-source
+      - repository_policy
+      - api-web
+      - mobile
+      - database
+    steps:
+      - name: Require all CI jobs to pass
+        shell: bash
+        env:
+          VALIDATE_RESULT: ${{needs.validate-pr-source.result}}
+          REPOSITORY_RESULT: ${{needs.repository_policy.result}}
+          API_WEB_RESULT: ${{needs.api-web.result}}
+          MOBILE_RESULT: ${{needs.mobile.result}}
+          DATABASE_RESULT: ${{needs.database.result}}
+        run: |
+          set -euo pipefail
+          for result in \
+            "$VALIDATE_RESULT" \
+            "$REPOSITORY_RESULT" \
+            "$API_WEB_RESULT" \
+            "$MOBILE_RESULT" \
+            "$DATABASE_RESULT"; do
+            if [[ "$result" != "success" ]]; then
+              echo "::error::One or more required CI jobs did not pass."
+              exit 1
+            fi
+          done
+          echo "All required CI jobs passed."

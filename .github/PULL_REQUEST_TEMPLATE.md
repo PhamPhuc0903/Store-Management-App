@@ -1,3 +1,9 @@
+## Branch target
+
+- [ ] Normal development PR targets `dev`.
+- [ ] Release PR targets `main` and originates from `dev`.
+- [ ] Exceptional hotfix flow is documented and synchronized back to `dev`.
+
 ## Summary
 
 Mô tả thay đổi và vấn đề được giải quyết.
@@ -16,8 +22,8 @@ Closes #
 
 ## Changes
 
-- 
-- 
+-
+-
 
 ## Test plan
 
