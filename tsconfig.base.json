@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "NodeNext",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "target": "ES2023"
+  }
+}

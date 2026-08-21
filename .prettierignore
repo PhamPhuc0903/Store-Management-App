@@ -1,0 +1,9 @@
+.dart_tool
+.next
+build
+coverage
+dist
+node_modules
+supabase/.temp
+**/*.g.dart
+**/*.freezed.dart

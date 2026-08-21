@@ -28,7 +28,7 @@ tồn kho, công nợ, báo cáo và AI hỗ trợ nhập liệu.
 
 ## Trạng thái hiện tại
 
-**Phase 0 — Project initiation and governance**
+**Sprint 1 — Monorepo Foundation**
 
 Bộ khung repository hiện chứa:
 
@@ -76,3 +76,25 @@ docs/operations/github-setup-checklist.md
 - Business command quan trọng phải idempotent.
 - Tenant isolation phải có automated test.
 - Realtime chỉ dùng để báo thay đổi; delta sync bảo đảm tính đầy đủ.
+
+
+## Monorepo
+
+```text
+apps/api          NestJS API
+apps/admin-web    Next.js Web Admin
+apps/mobile       Flutter Mobile
+packages          Shared TypeScript contracts
+supabase          PostgreSQL migrations and local platform
+```
+
+## Chạy local
+
+```bash
+./scripts/check_prerequisites.sh
+./scripts/bootstrap_local.sh
+npm run db:start
+npm run dev
+```
+
+Chi tiết: [Local Development](docs/engineering/local-development.md)
