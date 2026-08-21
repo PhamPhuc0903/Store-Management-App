@@ -1,0 +1,24 @@
+name: Security hardening task
+description: Track security engineering work that is safe to discuss publicly.
+title: "[Security]"
+labels:
+  - type:security
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not disclose an active vulnerability, credential, exploit path, or sensitive production detail here. Follow SECURITY.md for private vulnerability reporting.
+  - type: textarea
+    id: scope
+    attributes:
+      label: Hardening scope
+      description: Describe the security improvement, review, or technical debt without exposing an active vulnerability.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Define the safe, testable completion criteria.
+    validations:
+      required: true
