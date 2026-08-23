@@ -20,7 +20,7 @@ export default tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/explicit-function-return-types': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'warn',
     },
   },
   ...tseslint.configs.recommended,
