@@ -77,6 +77,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
+          nested_lockfiles="$(
+            find apps packages \
+              -name package-lock.json \
+              -type f \
+              -print
+          )"
+
+          if [[ -n "$nested_lockfiles" ]]; then
+            echo "::error::Only the root package-lock.json is allowed."
+            echo "$nested_lockfiles"
+            exit 1
+          fi
+
+
+      - name: Validate required repository files
+        shell: bash
+        run: |
+          set -euo pipefail
           required=(
             README.md
             CONTRIBUTING.md
@@ -168,6 +187,10 @@ jobs:
       - name: Test
         working-directory: apps/mobile
         run: flutter test
+
+      - name: Build Android debug APK
+        working-directory: apps/mobile
+        run: flutter build apk --debug
 
   database:
     name: Database
