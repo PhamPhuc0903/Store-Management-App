@@ -38,3 +38,11 @@ Một user story được xem là hoàn thành khi:
 - [ ] Có fallback khi provider lỗi.
 - [ ] Không gửi dữ liệu nhạy cảm không cần thiết.
 - [ ] Có evaluation case.
+
+## Definition of Done bổ sung cho delivery/release
+
+- [ ] Pull request nhắm đúng branch (`dev` cho development, `main` cho release promotion).
+- [ ] `CI / CI gate` thành công.
+- [ ] Breaking database change có kế hoạch expand-migrate-contract và tương thích với mobile version còn được hỗ trợ.
+- [ ] Release candidate trên `main` có thể truy vết về cùng Git SHA cho API, Web, migration set và Android artifact.
+- [ ] Khi deployment infrastructure đã hoạt động, staging verification phải thành công trước production approval.

@@ -14,7 +14,7 @@ fi
 
 echo "Configuring labels for $REPO"
 
-python3 - <<'PY' | while IFS=$'\t' read -r name color description; do
+python - <<'PY' | while IFS=$'\t' read -r name color description; do
 import json
 for label in json.load(open("scripts/labels.json", encoding="utf-8")):
     print(f"{label['name']}\t{label['color']}\t{label['description']}")
@@ -38,9 +38,11 @@ milestones=(
   "M8 Web Admin and Reports"
   "M9 Family Production Pilot"
   "M10 AI Invoice Extraction"
-  "M11 Production v1.0"
+  "M11 Security/Performance Hardening"
+  "M12 Production v1.0"
+  "M13 Portfolio Release"
+  "M14 SaaS Beta"
 )
-
 existing_milestones="$(gh api "repos/$REPO/milestones?state=all&per_page=100" --jq '.[].title')"
 
 for title in "${milestones[@]}"; do

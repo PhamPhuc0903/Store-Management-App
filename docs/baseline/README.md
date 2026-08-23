@@ -17,3 +17,11 @@ Không sửa âm thầm các tài liệu baseline. Khi cần thay đổi lớn:
 2. Tạo ADR.
 3. Phê duyệt.
 4. Phát hành phiên bản tài liệu baseline mới.
+
+## Approved post-baseline changes
+
+The original DOCX files remain immutable historical baselines. Approved changes after v2.0 are recorded through Change Request + ADR until the next consolidated baseline document revision.
+
+- CR-001 / ADR-017 (2026-08-20): introduces protected `dev` integration branch, `dev → main` release promotion, multi-artifact release identity, and forward-only production database migration safety.
+
+For current implementation behavior, ADR-017 and `docs/engineering/branching-release-policy.md` supersede the older branching/release-flow statements in the v2.0 baseline. The product/technology architecture remains unchanged.

@@ -7,9 +7,7 @@
 
 # IDE
 .idea/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.example.json
+.vscode/
 .DS_Store
 
 # Node
@@ -50,3 +48,10 @@ artifacts/
 # Sensitive user data
 data/private/
 data/production/
+
+# Flutter generated ephemeral files
+apps/mobile/.packages
+
+apps/mobile/android/local.properties
+
+apps/admin-web/tsconfig.tsbuildinfo

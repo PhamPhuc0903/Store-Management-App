@@ -62,3 +62,14 @@ Major change cần:
 - Retrospective: cuối sprint.
 - Architecture Review: khi có ADR lớn.
 - Pilot Review: hằng tuần trong giai đoạn pilot.
+
+## Accepted delivery-process decision — ADR-017
+
+From 2026-08-20, repository delivery uses `dev` as the protected integration branch and `main` as the protected release-candidate branch.
+
+- Normal work: short-lived branch → PR → `dev`.
+- Release promotion: `dev` → PR → `main`.
+- Staging: sourced from `main` when staging infrastructure is provisioned.
+- Production: release tag + verified staging candidate + manual approval.
+
+Release identity and database rollback rules are defined in `docs/engineering/branching-release-policy.md` and ADR-017.

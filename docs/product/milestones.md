@@ -2,15 +2,18 @@
 
 | ID | Milestone | Outcome |
 |---|---|---|
-| M0 | Repository and CI | Monorepo, local platform và CI hoạt động |
-| M1 | Identity and Tenancy | Auth, stores, memberships và permissions |
-| M2 | Catalog and Barcode | Product catalog và barcode scanning |
-| M3 | Pricing | Price books, history và conflict handling |
-| M4 | Offline Sync | Snapshot, delta, outbox và idempotency |
-| M5 | Family Pricing MVP | Tra giá thật tại cửa hàng gia đình |
-| M6 | Sales and Payments | Hóa đơn và thanh toán |
-| M7 | Purchasing and Inventory | Phiếu nhập và inventory ledger |
-| M8 | Web Admin and Reports | PC administration và reports |
-| M9 | Family Production Pilot | Pilot đầy đủ tại cửa hàng |
-| M10 | AI Invoice Extraction | AI nhập phiếu có human review |
-| M11 | Production v1.0 | Security hardening và production release |
+| M0 | Repository and CI | Monorepo, local platform, protected branches and CI work reliably |
+| M1 | Identity and Tenancy | Auth, stores, memberships and permissions |
+| M2 | Catalog and Barcode | Product catalog and barcode scanning |
+| M3 | Pricing | Price books, history and conflict handling |
+| M4 | Offline Sync | Snapshot, delta, outbox and idempotency |
+| M5 | Family Pricing MVP | Real family-store price lookup pilot |
+| M6 | Sales and Payments | Transactional sales and payments |
+| M7 | Purchasing and Inventory | Purchasing and immutable inventory ledger |
+| M8 | Web Admin and Reports | PC administration and reporting |
+| M9 | Family Production Pilot | Full family-store production pilot |
+| M10 | AI Invoice Extraction | Human-reviewed AI purchase-invoice extraction |
+| M11 | Security/Performance Hardening | Security, reliability, performance and observability hardening |
+| M12 | Production v1.0 | Controlled production release |
+| M13 | Portfolio Release | Sanitized public case study, README and demo |
+| M14 | SaaS Beta | Multi-store onboarding and SaaS beta readiness |
