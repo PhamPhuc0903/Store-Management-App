@@ -343,7 +343,7 @@ jobs:
             "$API_WEB_RESULT" \
             "$MOBILE_RESULT" \
             "$DATABASE_RESULT"; do
-            if [[ "$result" != "success" ]]; then
+            if [[ "$result" != "success" || "$result" != "skipped" ]]; then
               echo "::error::One or more required CI jobs did not pass."
               exit 1
             fi
