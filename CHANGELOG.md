@@ -5,6 +5,16 @@ Tất cả thay đổi đáng chú ý của StoreManagementApp được ghi tạ
 Định dạng dựa trên Keep a Changelog và semantic versioning.
 
 ## [Unreleased]
+### Sprint 2 Identity and tenancy foundation
+
+- Added M1 database foundation for profiles, organizations, stores, roles, permissions, and store memberships.
+- Added RLS tenant-isolation tests, including revoked-membership access checks.
+- Seeded the baseline role and permission catalogs while deferring the unspecified role-permission matrix.
+- Prevented unexpected API 500 responses from exposing internal error messages and added regression tests.
+- Added fail-fast API port normalization/validation so string environment values cannot be treated as a named pipe.
+- Added path-aware CI so unaffected Mobile/API-Web/Database jobs can be skipped, plus Gradle caching for Android builds.
+- Corrected stale branching/local-development documentation and the database CI migration-step label.
+
 ### Sprint 2 CI and delivery foundation
 
 - Added protected `dev → main` release-flow documentation and ADR-017.

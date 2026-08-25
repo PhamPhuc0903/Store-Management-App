@@ -4,7 +4,7 @@
 
 1. Chọn hoặc tạo một issue.
 2. Xác nhận acceptance criteria.
-3. Tạo branch từ `main`.
+3. Đồng bộ `dev` và tạo feature/fix branch từ `dev`.
 4. Viết code và test.
 5. Cập nhật tài liệu liên quan.
 6. Mở pull request.
@@ -29,7 +29,7 @@ feat/42-store-membership
 fix/87-price-version-conflict
 ```
 
-Không phát triển trực tiếp trên `main`.
+Không phát triển trực tiếp trên `dev` hoặc `main`. Development PR nhắm `dev`; release promotion chỉ đi `dev → main`.
 
 ## 3. Conventional commits
 
