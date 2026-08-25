@@ -26,7 +26,8 @@
     "db:reset": "npx supabase db reset",
     "db:status": "npx supabase status",
     "validate:foundation": "node scripts/validate_foundation.mjs",
-    "db:lint": "supabase db lint --level error"
+    "db:lint": "supabase db lint --level error",
+    "db:test": "supabase test db"
   },
   "dependencies": {
     "prettier": "^3.6.2"

@@ -86,6 +86,7 @@ cd apps/mobile
 dart format --output=none --set-exit-if-changed lib test
 flutter analyze
 flutter test
+flutter build apk --debug
 ```
 
 Database:
@@ -109,7 +110,7 @@ Normal development:
 git checkout dev
 git pull
 
-git checkout -b feature/<short-name>
+git checkout -b feat/<short-name>
 # implement and test
 # PR -> dev
 ```

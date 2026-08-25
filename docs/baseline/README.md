@@ -4,6 +4,7 @@ Thư mục này chứa các tài liệu đã được chốt trước khi bắt 
 
 - Project Charter Final v2.0.
 - Technical Stack and System Architecture Final v2.0.
+- Implementation Roadmap v1.0.
 - System architecture diagram.
 - Offline synchronization flow.
 - CI/CD deployment flow.

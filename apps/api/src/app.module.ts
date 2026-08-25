@@ -2,6 +2,7 @@ import {LoggerModule} from "nestjs-pino";
 import {Module} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
 import {HealthModule} from "./health/health.module";
+import {validateEnvironment} from "./config/validate-environment";
 
 
 
@@ -10,6 +11,7 @@ import {HealthModule} from "./health/health.module";
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
+      validate: validateEnvironment
     }),
     LoggerModule.forRoot({
       pinoHttp: {
