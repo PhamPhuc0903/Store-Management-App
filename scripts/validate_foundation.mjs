@@ -8,7 +8,10 @@ const required = [
   'apps/mobile/pubspec.yaml',
   'apps/mobile/lib/main.dart',
   'supabase/config.toml',
-  'supabase/migrations/20260720000100_foundation.sql'
+  'supabase/migrations/20260720000100_foundation.sql',
+  'supabase/migrations/20260824000100_identity_tenancy_foundation.sql',
+  'supabase/tests/identity_tenancy_rls.test.sql',
+  'docs/baseline/StoreSync_Implementation_Roadmap_v1.0.docx'
 ];
 
 for (const file of required) {
@@ -26,4 +29,4 @@ for (const file of [
   JSON.parse(readFileSync(file, 'utf-8'));
 }
 
-console.log('Sprint 1 monorepo foundation structure is valid.');
+console.log('Monorepo and current M1 foundation structure is valid.');
