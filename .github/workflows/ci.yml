@@ -191,7 +191,7 @@ jobs:
           fi
           echo "api_web=$api_web" >> "$GITHUB_OUTPUT"
           echo "database=$database" >> "$GITHUB_OUTPUT"
-          echo "mobile=$mobile" >> "$GITHUB_OUTPUT
+          echo "mobile=$mobile" >> "$GITHUB_OUTPUT"
           echo "api_web=$api_web database=$database mobile=$mobile"
 
   api-web:
