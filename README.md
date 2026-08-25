@@ -28,18 +28,19 @@ tồn kho, công nợ, báo cáo và AI hỗ trợ nhập liệu.
 
 ## Trạng thái hiện tại
 
-**Sprint 1 — Monorepo Foundation**
+**Sprint 2 — Identity and Tenancy foundation**
 
-Bộ khung repository hiện chứa:
+Foundation hiện đã có:
 
-- Project governance.
-- Contribution workflow.
-- Security policy.
-- Issue và pull request templates.
-- Milestones và labels bootstrap script.
-- Baseline Project Charter và Technical Architecture.
-- ADR template.
-- Backlog 30 ngày đầu.
+- Monorepo cho NestJS API, Next.js Admin Web và Flutter Android.
+- CI cho API/Web, Mobile và Supabase/PostgreSQL.
+- Protected `dev → main` release flow và ADR-017.
+- Supabase local foundation và automated database validation.
+- Android debug build verification trong CI.
+- Baseline Project Charter, Technical Architecture, roadmap và 30-day backlog.
+
+Increment hiện tại triển khai M1 với `profiles`, `organizations`, `stores`, roles/permissions,
+`store_memberships` và tenant-isolation tests trước Auth/Tenancy API vertical slice.
 
 ## Tài liệu
 
@@ -49,6 +50,7 @@ Bộ khung repository hiện chứa:
 - [Branching and Release Policy](docs/engineering/branching-release-policy.md)
 - [Architecture Decision Records](docs/adr/README.md)
 - [Baseline documents](docs/baseline/README.md)
+- [Identity and Tenancy Foundation](docs/engineering/identity-tenancy-foundation.md)
 
 ## Bắt đầu
 
@@ -90,11 +92,26 @@ supabase          PostgreSQL migrations and local platform
 
 ## Chạy local
 
+Bootstrap dependencies từ repository root:
+
 ```bash
-./scripts/check_prerequisites.sh
-./scripts/bootstrap_local.sh
+make bootstrap
+```
+
+Hoặc chạy trực tiếp `npm ci` và `flutter pub get` theo hướng dẫn local development.
+
+Khởi động Supabase, API và Admin Web:
+
+```bash
 npm run db:start
 npm run dev
+```
+
+Chạy Flutter trong terminal riêng:
+
+```bash
+cd apps/mobile
+flutter run
 ```
 
 Chi tiết: [Local Development](docs/engineering/local-development.md)
