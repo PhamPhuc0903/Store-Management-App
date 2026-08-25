@@ -51,6 +51,9 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Validate foundation structure
+        run: node scripts/validate_foundation.mjs
+
       - name: Reject tracked runtime environment files
         shell: bash
         run: |
@@ -120,8 +123,81 @@ jobs:
             exit 1
           fi
 
+  changes:
+    name: Detect affected components
+    runs-on: ubuntu-latest
+    outputs:
+      api_web: ${{steps.detect.outputs.api_web}}
+      database: ${{steps.detect.outputs.database}}
+      mobile: ${{steps.detect.outputs.mobile}}
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Detect changed paths
+        id: detect
+        shell: bash
+        env:
+          EVENT_NAME: ${{github.event_name}}
+          BASE_SHA: ${{github.event.pull_request.base.sha}}
+          HEAD_SHA: ${{github.event.pull_request.head.sha}}
+          BEFORE_SHA: ${{github.event.before}}
+          CURRENT_SHA: ${{github.sha}}
+        run: |
+          set -euo pipefail
+          api_web=false
+          database=false
+          mobile=false
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            api_web=true
+            database=true
+            mobile=true
+          else
+            if [[ "$EVENT_NAME" == "pull_request" ]]; then
+              changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+            elif [[ "$EVENT_NAME" == "push" && -n "$BEFORE_SHA" && "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+              changed_files="$(git diff --name-only "$BEFORE_SHA" "$CURRENT_SHA")"
+            else
+              changed_files=""
+              api_web=true
+              database=true
+              mobile=true
+            fi
+            while IFS= read -r file; do
+              [[ -n "$file" ]] || continue
+              case "$file" in
+                .github/workflows/ci/yml
+                  api_web=true
+                  database=true
+                  mobile=true
+                  ;;
+                package.json|package-lock.json|tsconfig.base.json|.npmrc|.prettierignore|.prettierrc.json|scripts/validate_foundation.mjs)
+                  api_web=true
+                  ;;
+                apps/api/*|apps/admin-web/*|packages/*)
+                  api_web=true
+                  ;;
+                apps/mobile/*)
+                  mobile=true
+                  ;;
+                supabase/*)
+                  database=true
+                  ;;
+              esac
+            done <<< "$changed_files"
+          fi
+          echo "api_web=$api_web" >> "$GITHUB_OUTPUT"
+          echo "database=$database" >> "$GITHUB_OUTPUT"
+          echo "mobile=$mobile" >> "$GITHUB_OUTPUT
+          echo "api_web=$api_web database=$database mobile=$mobile"
+
   api-web:
     name: API and Web
+    needs: changes
+    if: needs.changes.outputs.api_web == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -157,6 +233,8 @@ jobs:
 
   mobile:
     name: Mobile
+    needs: changes
+    if: needs.changes.outputs.mobile == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -171,6 +249,9 @@ jobs:
           flutter-version: 3.47.0
           channel: stable
           cache: true
+
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Get dependencies
         working-directory: apps/mobile
@@ -194,6 +275,8 @@ jobs:
 
   database:
     name: Database
+    needs: changes
+    if: needs.changes.outputs.database == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -237,6 +320,7 @@ jobs:
     needs:
       - validate-pr-source
       - repository_policy
+      - changes
       - api-web
       - mobile
       - database
@@ -246,6 +330,7 @@ jobs:
         env:
           VALIDATE_RESULT: ${{needs.validate-pr-source.result}}
           REPOSITORY_RESULT: ${{needs.repository_policy.result}}
+          CHANGES_RESULT: ${{needs.changes.result}}
           API_WEB_RESULT: ${{needs.api-web.result}}
           MOBILE_RESULT: ${{needs.mobile.result}}
           DATABASE_RESULT: ${{needs.database.result}}
@@ -254,6 +339,7 @@ jobs:
           for result in \
             "$VALIDATE_RESULT" \
             "$REPOSITORY_RESULT" \
+            "$CHANGES_RESULT" \
             "$API_WEB_RESULT" \
             "$MOBILE_RESULT" \
             "$DATABASE_RESULT"; do
