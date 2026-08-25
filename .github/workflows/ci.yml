@@ -169,7 +169,7 @@ jobs:
             while IFS= read -r file; do
               [[ -n "$file" ]] || continue
               case "$file" in
-                .github/workflows/ci/yml
+                .github/workflows/ci/yml)
                   api_web=true
                   database=true
                   mobile=true
