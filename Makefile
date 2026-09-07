@@ -1,4 +1,4 @@
-.PHONY: validate bootstrap dev mobile test lint typecheck format-check build stop db-start db-stop db-reset db-lint bootstrap-github
+.PHONY: validate bootstrap dev mobile test lint typecheck format-check build stop db-start db-stop db-reset db-lint db-test bootstrap-github
 
 validate:
 	./scripts/validate_phase0.sh
@@ -48,7 +48,7 @@ db-lint:
 	npm run db:lint
 
 db-test:
-  npm run db:test
+	npm run db:test
 
 bootstrap-github:
 	@test -n "$(REPO)" || (echo "Usage: make bootstrap-github REPO=owner/repository" && exit 1)
