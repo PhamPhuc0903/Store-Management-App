@@ -1,6 +1,6 @@
 begin;
 
-select plan(20);
+select plan(31);
 
 select has_table('public', 'profiles', 'profiles table exists');
 select has_table('public', 'organizations', 'organizations table exists');
@@ -9,6 +9,30 @@ select has_table('public', 'roles', 'roles table exists');
 select has_table('public', 'permissions', 'permissions table exists');
 select has_table('public', 'role_permissions', 'role_permissions table exists');
 select has_table('public', 'store_memberships', 'store_memberships table exists');
+select has_table('public', 'processed_operations', 'processed_operations table exists');
+select is(
+  has_table_privilege('authenticated', 'public.processed_operations', 'SELECT'),
+  false,
+  'authenticated clients cannot read the processed operation ledger'
+  );
+select is(
+  has_function_privilege(
+  'authenticated',
+  'public.bootstrap_owner_store(uuid,uuid,text,text)',
+  'EXECUTE'
+  ),
+  false,
+  'authenticated clients cannot execute owner-store bootstrap directly'
+  );
+select is(
+  has_function_privilege(
+  'service_role',
+  'public.bootstrap_owner_store(uuid,uuid,text,text)',
+  'EXECUTE'
+  ),
+  true,
+  'service role can execute owner-store bootstrap for the NestJS boundary'
+  );
 
 select is(
   (select count(*) from public.roles where code in ('OWNER', 'ADMIN', 'STAFF', 'VIEWER')),
@@ -107,6 +131,91 @@ select is((select count(*) from public.stores), 0::bigint, 'revoked user can no 
 select is((select count(*) from public.organizations), 0::bigint, 'revoked user can no longer read the organization');
 
 reset role;
+
+
+insert into auth.users (id, email, raw_user_meta_data, created_at, updated_at)
+values (
+         '00000000-0000-0000-0000-0000000000c3',
+         'owner-c@example.test',
+         '{"display_name":"Owner C"}'::jsonb,
+         now(),
+         now()
+       );
+
+select is(
+  (
+  public.bootstrap_owner_store(
+  '40000000-0000-4000-8000-0000000000c3',
+  '00000000-0000-0000-0000-0000000000c3',
+  ' Organization C ',
+  ' Store C '
+  ) -> 'organization' ->> 'name'
+  ),
+  'Organization C'::text,
+  'owner-store bootstrap normalizes and returns the organization name'
+  );
+
+select is(
+  (select count(*) from public.organizations where created_by = '00000000-0000-0000-0000-0000000000c3'),
+  1::bigint,
+  'owner-store bootstrap creates one organization'
+  );
+
+select is(
+  (
+  select count(*)
+  from public.stores
+  where created_by = '00000000-0000-0000-0000-0000000000c3'
+  ),
+  1::bigint,
+  'owner-store bootstrap creates one store'
+  );
+
+select is(
+  (
+  select count(*)
+  from public.store_memberships as membership
+  join public.roles as role on role.id = membership.role_id
+  where membership.user_id = '00000000-0000-0000-0000-0000000000c3'
+  and membership.status = 'ACTIVE'
+  and role.code = 'OWNER'
+  ),
+  1::bigint,
+  'owner-store bootstrap creates an active OWNER membership'
+  );
+
+select is(
+  (
+  select count(*)
+  from public.processed_operations
+  where operation_id = '40000000-0000-4000-8000-0000000000c3'
+  ),
+  1::bigint,
+  'owner-store bootstrap records the processed operation'
+  );
+
+select is(
+  (
+  public.bootstrap_owner_store(
+  '40000000-0000-4000-8000-0000000000c3',
+  '00000000-0000-0000-0000-0000000000c3',
+  'Organization C',
+  'Store C'
+  ) -> 'store' ->> 'id'
+  ),
+  (
+  select id::text
+  from public.stores
+  where created_by = '00000000-0000-0000-0000-0000000000c3'
+  ),
+  'retrying the same operation returns the original store'
+  );
+
+select is(
+  (select count(*) from public.organizations where created_by = '00000000-0000-0000-0000-0000000000c3'),
+  1::bigint,
+  'retrying the same operation does not create a duplicate tenant'
+  );
 
 select * from finish();
 rollback;
