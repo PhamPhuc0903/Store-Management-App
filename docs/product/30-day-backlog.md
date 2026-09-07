@@ -12,6 +12,22 @@ Kết thúc 30 ngày đầu phải có một vertical slice chạy được:
 → Staff chỉ thấy đúng cửa hàng
 ```
 
+## Current progress — 2026-09-01
+
+The repository is currently in **Sprint 2 / M1 Identity and Tenancy**.
+
+- M0 repository/CI foundation: implemented in the codebase; external GitHub rulesets/environments
+  still require verification in the real repository.
+- E3-01 User profile model: complete.
+- E3-02 Organization and store model: complete.
+- E3-03 Store membership model: complete.
+- E3-04 Owner creates store: implemented through the authenticated, idempotent tenancy bootstrap API.
+- E3-08 Tenant isolation: database/RLS coverage exists; backend authorization coverage remains pending,
+  so the backlog item is not considered fully complete yet.
+- E3-05, E3-06, E3-07, E3-09 and E3-10: pending.
+
+M1 is therefore **in progress**, and M2 Catalog/Barcode must not start yet.
+
 ## Epic E0 — Project initiation
 
 ### E0-01 Create repository governance
@@ -141,6 +157,8 @@ Goal: CI và identity/tenancy vertical slice.
 - E3-02
 - E3-03
 - E3-04
+- E3-05
+- E3-06
 - E3-07
 - E3-08
 

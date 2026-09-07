@@ -39,13 +39,20 @@ Foundation hiện đã có:
 - Android debug build verification trong CI.
 - Baseline Project Charter, Technical Architecture, roadmap và 30-day backlog.
 
-Increment hiện tại triển khai M1 với `profiles`, `organizations`, `stores`, roles/permissions,
-`store_memberships` và tenant-isolation tests trước Auth/Tenancy API vertical slice.
+Increment hiện tại vẫn ở M1. Database foundation với `profiles`, `organizations`, `stores`,
+roles/permissions, `store_memberships` và tenant-isolation tests đã hoàn tất. E3-04 đã mở
+Auth/Tenancy API vertical slice bằng command `POST /api/v1/tenancy/bootstrap`: JWT được xác thực
+qua Supabase Auth, sau đó backend tạo organization + first store + ACTIVE OWNER membership trong
+một transaction idempotent theo `operationId`.
+
+M1 chưa hoàn tất; công việc kế tiếp trên critical path là invitation/acceptance, store selection,
+backend permission enforcement, device registration và audit foundation.
 
 ## Tài liệu
 
 - [Project Governance](docs/project-governance.md)
 - [30-day Backlog](docs/product/30-day-backlog.md)
+- [Current Delivery Status](docs/product/current-status.md)
 - [Definition of Done](docs/engineering/definition-of-done.md)
 - [Branching and Release Policy](docs/engineering/branching-release-policy.md)
 - [Architecture Decision Records](docs/adr/README.md)
