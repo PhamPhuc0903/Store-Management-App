@@ -1,7 +1,6 @@
-import {Injectable} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {HealthResponseDto} from "./health.dto";
-
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { HealthResponseDto } from './health.dto';
 
 @Injectable()
 export class HealthService {

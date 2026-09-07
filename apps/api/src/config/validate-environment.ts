@@ -1,8 +1,6 @@
 const DEFAULT_API_PORT = 3001;
 
-export function validateEnvironment(
-  environment: Record<string, unknown>
-): Record<string, unknown> {
+export function validateEnvironment(environment: Record<string, unknown>): Record<string, unknown> {
   const rawPort = environment.API_PORT ?? DEFAULT_API_PORT;
   const apiPort = typeof rawPort === 'number' ? rawPort : Number(String(rawPort));
   if (!Number.isInteger(apiPort) || apiPort < 1 || apiPort > 65_535) {
@@ -10,6 +8,6 @@ export function validateEnvironment(
   }
   return {
     ...environment,
-    API_PORT: apiPort
+    API_PORT: apiPort,
   };
 }

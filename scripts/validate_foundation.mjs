@@ -10,7 +10,10 @@ const required = [
   'supabase/config.toml',
   'supabase/migrations/20260720000100_foundation.sql',
   'supabase/migrations/20260824000100_identity_tenancy_foundation.sql',
+  'supabase/migrations/20260901000100_owner_store_bootstrap.sql',
   'supabase/tests/identity_tenancy_rls.test.sql',
+  'apps/api/src/auth/supabase-auth.guard.ts',
+  'apps/api/src/tenancy/tenancy.controller.ts',
   'docs/baseline/StoreSync_Implementation_Roadmap_v1.0.docx'
 ];
 
@@ -29,4 +32,4 @@ for (const file of [
   JSON.parse(readFileSync(file, 'utf-8'));
 }
 
-console.log('Monorepo and current M1 foundation structure is valid.');
+console.log('Monorepo and current Sprint 2 / M1 tenancy vertical-slice structure is valid.');

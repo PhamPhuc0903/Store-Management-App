@@ -22,3 +22,14 @@ The M1 Identity/Tenancy migration and pgTAP isolation tests live in:
 supabase/migrations/20260824000100_identity_tenancy_foundation.sql
 supabase/tests/identity_tenancy_rls.test.sql
 ```
+
+
+E3-04 adds the idempotent owner/store bootstrap migration:
+
+```text
+supabase/migrations/20260901000100_owner_store_bootstrap.sql
+```
+
+It introduces the backend-only `bootstrap_owner_store` RPC and `processed_operations` idempotency
+ledger. The RPC is not executable by `anon` or `authenticated`; NestJS invokes it with the
+server-only service-role credential after validating the caller through Supabase Auth.

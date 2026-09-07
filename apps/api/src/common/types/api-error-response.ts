@@ -7,3 +7,10 @@ export interface ApiErrorResponse {
   timestamp: string;
   path: string;
 }
+
+export interface ApiExceptionBody {
+  code?: unknown;
+  message?: unknown;
+  retryable?: unknown;
+  details?: unknown;
+}

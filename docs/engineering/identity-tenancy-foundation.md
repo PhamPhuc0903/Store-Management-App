@@ -1,6 +1,6 @@
 # Identity and Tenancy Database Foundation
 
-Status: Sprint 2 / M1 foundation
+Status: Sprint 2 / M1 — database foundation complete; Auth/Tenancy vertical slice in progress
 
 This increment establishes the database boundary required before the first Auth/Tenancy API write vertical slice.
 
@@ -57,3 +57,32 @@ supabase db reset
 supabase db lint --level error
 supabase test db
 ```
+
+
+## Current implementation progress — 2026-09-01
+
+Implemented in source:
+
+- E3-01 User profile model.
+- E3-02 Organization and store model.
+- E3-03 Store membership model.
+- Database-side tenant-isolation coverage for the current schema.
+- E3-04 Owner creates store through `POST /api/v1/tenancy/bootstrap` (pending normal CI/local Supabase verification before Done).
+- Supabase access-token validation at the NestJS boundary for the E3-04 command.
+- Idempotent bootstrap processing through `processed_operations` and `operationId`.
+
+The bootstrap command atomically creates the organization, first store, and ACTIVE `OWNER`
+membership. Repeating the same operation with the same payload returns the original result rather
+than creating duplicate tenant data.
+
+Still required before M1 is complete:
+
+- E3-05 Owner invites staff.
+- E3-06 Staff accepts invitation.
+- E3-07 Store selection on mobile.
+- Backend membership/permission guards and authorization tests to complement RLS coverage.
+- E3-09 Device registration foundation and remote revoke behavior.
+- E3-10 Audit log foundation.
+
+The role-permission matrix remains intentionally unseeded until the authorization slice defines
+and tests the exact assignments.

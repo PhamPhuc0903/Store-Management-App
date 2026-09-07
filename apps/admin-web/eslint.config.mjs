@@ -7,7 +7,8 @@ const config = [
   ...nextVitals,
   ...nextTs,
   {
-    ignores: ['node_modules',
+    ignores: [
+      'node_modules',
       'dist',
       '.next',
       '.nuxt',
@@ -15,7 +16,8 @@ const config = [
       'build',
       '.turbo',
       '.next',
-      'out'],
+      'out',
+    ],
   },
 ];
 

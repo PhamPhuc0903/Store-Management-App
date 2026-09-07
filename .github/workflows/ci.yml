@@ -169,7 +169,7 @@ jobs:
             while IFS= read -r file; do
               [[ -n "$file" ]] || continue
               case "$file" in
-                .github/workflows/ci/yml)
+                .github/workflows/ci.yml)
                   api_web=true
                   database=true
                   mobile=true
@@ -293,7 +293,7 @@ jobs:
       - name: Start local Supabase
         run: supabase start
 
-      - name: Rebuild database from migartions
+      - name: Rebuild database from migrations
         run: supabase db reset
 
       - name: Lint database

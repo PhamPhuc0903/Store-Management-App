@@ -9,6 +9,7 @@
 .github/PULL_REQUEST_TEMPLATE.md
 .github/dependabot.yml
 .github/workflows/ci.yml
+.github/workflows/security.yml
 .gitignore
 .npmrc
 .nvmrc
@@ -22,6 +23,7 @@ Makefile
 PHASE_0_COMPLETION.md
 README.md
 SECURITY.md
+SPRINT_2_PR1_CI_BRANCHING_REPORT.md
 apps/admin-web/README.md
 apps/admin-web/app/api/health/route.ts
 apps/admin-web/app/globals.css
@@ -39,6 +41,13 @@ apps/api/eslint.config.mjs
 apps/api/nest-cli.json
 apps/api/package.json
 apps/api/src/app.module.ts
+apps/api/src/auth/auth.module.ts
+apps/api/src/auth/authenticated-user.ts
+apps/api/src/auth/current-user.decorator.ts
+apps/api/src/auth/supabase-auth.guard.spec.ts
+apps/api/src/auth/supabase-auth.guard.ts
+apps/api/src/auth/supabase-auth.service.spec.ts
+apps/api/src/auth/supabase-auth.service.ts
 apps/api/src/common/filters/http-exception.filter.spec.ts
 apps/api/src/common/filters/http-exception.filter.ts
 apps/api/src/common/types/api-error-response.ts
@@ -49,7 +58,15 @@ apps/api/src/health/health.dto.ts
 apps/api/src/health/health.module.ts
 apps/api/src/health/health.service.spec.ts
 apps/api/src/health/health.service.ts
+apps/api/src/infrastructure/supabase/supabase-admin.service.spec.ts
+apps/api/src/infrastructure/supabase/supabase-admin.service.ts
+apps/api/src/infrastructure/supabase/supabase-platform.module.ts
 apps/api/src/main.ts
+apps/api/src/tenancy/dto/bootstrap-owner-store.dto.ts
+apps/api/src/tenancy/tenancy.controller.ts
+apps/api/src/tenancy/tenancy.module.ts
+apps/api/src/tenancy/tenancy.service.spec.ts
+apps/api/src/tenancy/tenancy.service.ts
 apps/api/tsconfig.build.json
 apps/api/tsconfig.json
 apps/api/vitest.config.ts
@@ -87,6 +104,7 @@ apps/mobile/pubspec.yaml
 apps/mobile/test/app_test.dart
 docs/adr/0000-template.md
 docs/adr/0017-dev-integration-and-multi-artifact-release.md
+docs/adr/0018-monorepo-ci-component-gates.md
 docs/adr/README.md
 docs/baseline/01_system_architecture.png
 docs/baseline/01_system_architecture.svg
@@ -99,6 +117,7 @@ docs/baseline/StoreManagementApp_Project_Charter_Final_v2.0.docx
 docs/baseline/StoreManagementApp_Technical_Stack_and_System_Architecture_Final_v2.0.docx
 docs/baseline/StoreSync_Implementation_Roadmap_v1.0.docx
 docs/change-requests/CR-001-dev-branch-and-release-strategy.md
+docs/engineering/auth-tenancy-api.md
 docs/engineering/branching-release-policy.md
 docs/engineering/definition-of-done.md
 docs/engineering/identity-tenancy-foundation.md
@@ -107,6 +126,7 @@ docs/engineering/monorepo-structure.md
 docs/engineering/release-identity-and-database-safety.md
 docs/operations/github-setup-checklist.md
 docs/product/30-day-backlog.md
+docs/product/current-status.md
 docs/product/milestones.md
 docs/project-governance.md
 package-lock.json
@@ -115,6 +135,7 @@ packages/api-contracts/README.md
 packages/api-contracts/package.json
 packages/api-contracts/src/health.ts
 packages/api-contracts/src/index.ts
+packages/api-contracts/src/tenancy.ts
 packages/api-contracts/tsconfig.json
 scripts/bootstrap_github.sh
 scripts/dev.mjs
@@ -125,6 +146,7 @@ supabase/README.md
 supabase/config.toml
 supabase/migrations/20260720000100_foundation.sql
 supabase/migrations/20260824000100_identity_tenancy_foundation.sql
+supabase/migrations/20260901000100_owner_store_bootstrap.sql
 supabase/seed.sql
 supabase/tests/README.md
 supabase/tests/identity_tenancy_rls.test.sql
