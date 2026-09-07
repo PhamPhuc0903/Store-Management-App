@@ -1,11 +1,10 @@
 import './globals.css';
-import {Metadata} from "next";
-import {ReactNode} from "react";
-
+import { Metadata } from 'next';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'StoreManagementApp Admin',
-  description: 'Web administration for StoreManagementApp.'
+  description: 'Web administration for StoreManagementApp.',
 };
 
 interface RootLayoutProps {

@@ -7,9 +7,15 @@ interface ApiHealth {
 }
 
 async function getApiHealth(): Promise<ApiHealth | null> {
-  const baseUrl = process.env.INTERNAL_API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3001/api/v1';
+  const baseUrl =
+    process.env.INTERNAL_API_BASE_URL ??
+    process.env.NEXT_PUBLIC_API_BASE_URL ??
+    'http://localhost:3001/api/v1';
   try {
-    const response = await fetch(`${baseUrl}/health`, {cache: 'no-store', signal: AbortSignal.timeout(2500)});
+    const response = await fetch(`${baseUrl}/health`, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(2500),
+    });
     if (!response.ok) {
       return null;
     }
@@ -33,11 +39,13 @@ export default async function HomePage() {
         </div>
 
         <div className={health ? 'status status-ok' : 'status status-warning'}>
-          <span className="status-dot" aria-hidden="true"/>
+          <span className="status-dot" aria-hidden="true" />
           <div>
             <strong>{health ? 'API đang hoạt động' : 'API chưa kết nối'}</strong>
             <p>
-              {health ? `${health.service} · ${health.environment} · ${health.version}` : 'Chạy npm run dev:api để kiểm tra kết nối.'}
+              {health
+                ? `${health.service} · ${health.environment} · ${health.version}`
+                : 'Chạy npm run dev:api để kiểm tra kết nối.'}
             </p>
           </div>
         </div>

@@ -1,12 +1,11 @@
-import {NextConfig} from "next";
-import path from "node:path";
-
+import { NextConfig } from 'next';
+import path from 'node:path';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactStrictMode: true,
   turbopack: {
-    root: path.resolve(process.cwd(), '../..')
+    root: path.resolve(process.cwd(), '../..'),
   },
 };
 
