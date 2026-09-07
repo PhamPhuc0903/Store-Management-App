@@ -9,6 +9,7 @@
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ES2023"
   }
